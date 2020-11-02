@@ -1,129 +1,126 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { RouteComponentProps } from 'react-router'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import Alert from '@material-ui/lab/Alert'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { RouteComponentProps } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import Alert from "@material-ui/lab/Alert";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import {
   Button,
   TextField,
   Chip,
   InputAdornment,
   IconButton,
-} from '@material-ui/core'
+} from "@material-ui/core";
 
-import Navbar from '../components/Navbar'
+import Navbar from "../components/Navbar";
+import { Authors, CategoryQuery, EditRouteInfo, AppState } from "../types";
 import {
-  Authors,
-  CategoryQuery,
-  EditRouteInfo,
-  AppState
-} from '../types'
-import { editBookSucceed, editBookFailed, hideBookMessage } from '../redux/actions/bookActions'
-import '../style/EditBook.css'
+  editBookSucceed,
+  editBookFailed,
+  hideBookMessage,
+} from "../redux/actions/bookActions";
+import "../style/EditBook.css";
 
 const useStyle = makeStyles({
   form: {
-    backgroundColor: '#E8E8E8',
-    margin: '1rem 0',
-  }
-})
+    backgroundColor: "#E8E8E8",
+    margin: "1rem 0",
+  },
+});
 
 const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
-  const style = useStyle()
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const bookResponse = useSelector((state: AppState) => state.book)
-  const bookId = match.params.bookId
-  const [title, setTitle] = useState('')
-  const [isbn, setIsbn] = useState('')
-  const [publisher, setPublisher] = useState('')
-  const [publishYear, setPublishYear] = useState('')
-  const [quantity, setQuantity] = useState('')
-  const [authorsState, setAuthors] = useState<Authors>({ authors: [] })
-  const [authorField, setAuthorField] = useState('')
+  const style = useStyle();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const bookResponse = useSelector((state: AppState) => state.book);
+  const bookId = match.params.bookId;
+  const [title, setTitle] = useState("");
+  const [isbn, setIsbn] = useState("");
+  const [publisher, setPublisher] = useState("");
+  const [publishYear, setPublishYear] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [authorsState, setAuthors] = useState<Authors>({ authors: [] });
+  const [authorField, setAuthorField] = useState("");
   const [categoriesState, setCategories] = useState<CategoryQuery>({
     categories: [],
-  })
-  const [categoryField, setCategoryField] = useState('')
+  });
+  const [categoryField, setCategoryField] = useState("");
 
   useEffect(() => {
-    dispatch(hideBookMessage())
-  }, [dispatch])
+    dispatch(hideBookMessage());
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchBookInfo = async () => {
-      let { data } = await axios.get(
-        `/api/v1/books/${bookId}`
-      )
-      setTitle(data.title)
-      setIsbn(data.isbn)
-      setPublisher(data.publisher)
-      setPublishYear(data.publishYear)
-      setQuantity(data.quantity)
-      setAuthors({ authors: data.authors })
-      setCategories({ categories: data.categories })
-    }
-    fetchBookInfo()
-  }, [bookId])
+      let { data } = await axios.get(`/api/v1/books/${bookId}`);
+      setTitle(data.title);
+      setIsbn(data.isbn);
+      setPublisher(data.publisher);
+      setPublishYear(data.publishYear);
+      setQuantity(data.quantity);
+      setAuthors({ authors: data.authors });
+      setCategories({ categories: data.categories });
+    };
+    fetchBookInfo();
+  }, [bookId]);
 
   const handleAddAuthor = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    e.preventDefault()
+    e.preventDefault();
     setAuthors({
-      authors: [...authorsState.authors, authorField]
-    })
-  }
+      authors: [...authorsState.authors, authorField],
+    });
+  };
 
   const handleDeleteAuthor = (item: string) => () => {
-    const newAuthors = authorsState.authors
-    let removeItemIndex = newAuthors.indexOf(item)
-    newAuthors.splice(removeItemIndex, 1)
-    setAuthors({authors: newAuthors})
-  }
+    const newAuthors = authorsState.authors;
+    let removeItemIndex = newAuthors.indexOf(item);
+    newAuthors.splice(removeItemIndex, 1);
+    setAuthors({ authors: newAuthors });
+  };
 
   const handleAddCategory = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    e.preventDefault()
+    e.preventDefault();
     setCategories({
-      categories: [...categoriesState.categories, categoryField]
-    })
-  }
+      categories: [...categoriesState.categories, categoryField],
+    });
+  };
 
   const handleDeleteCategory = (item: string) => () => {
-    const newCategories = categoriesState.categories
-    let removeItemIndex = newCategories.indexOf(item)
-    newCategories.splice(removeItemIndex, 1)
-    setCategories({categories: newCategories})
-  }
+    const newCategories = categoriesState.categories;
+    let removeItemIndex = newCategories.indexOf(item);
+    newCategories.splice(removeItemIndex, 1);
+    setCategories({ categories: newCategories });
+  };
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const res = await axios.put(
-        `/api/v1/books/${bookId}`,
-        {
-          title: title,
-          isbn: parseInt(isbn),
-          publisher: publisher,
-          publishYear: parseInt(publishYear),
-          quantity: parseInt(quantity),
-          authors: authorsState.authors,
-          categories: categoriesState.categories,
-        }
-      )
-      await dispatch(editBookSucceed(res.data))
-      if (res.status === 200) {
-        setTimeout(() => history.push("/"), 1500)
+      const res = await axios.put(`/api/v1/books/${bookId}`, {
+        title: title,
+        isbn: parseInt(isbn),
+        publisher: publisher,
+        publishYear: parseInt(publishYear),
+        quantity: parseInt(quantity),
+        authors: authorsState.authors,
+        categories: categoriesState.categories,
+      });
+      if (res.status === 200 && res.data.status === "success") {
+        await dispatch(editBookSucceed(res.data));
+        setTimeout(() => history.push("/"), 2000);
+      } else if (res.status === 200 && res.data.message === 'TokenExpiredError') {
+        await dispatch(editBookFailed(res.data))
+        setTimeout(() => history.push("/login"), 2000);
       }
     } catch (error) {
       dispatch(editBookFailed(error.response.data))
     }
-  }
+  };
 
   return (
     <>
@@ -131,15 +128,10 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
       <div className="EditBook-MainContainer">
         <h1> EDITING: {title} </h1>
         {bookResponse.status && bookResponse.message ? (
-          <Alert
-            variant="filled"
-            severity={bookResponse.status}
-          >
-           {bookResponse.message}
+          <Alert variant="filled" severity={bookResponse.status}>
+            {bookResponse.message}
           </Alert>
-        ) : (
-          null
-        )}
+        ) : null}
         <form onSubmit={handleSubmit} className="EditBook-Form">
           <TextField
             classes={{ root: style.form }}
@@ -184,7 +176,7 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
               ),
             }}
           />
-          <div style={{ margin: '0' }}>
+          <div style={{ margin: "0" }}>
             authors:
             {authorsState.authors.length >= 1 &&
               authorsState.authors.map((item) => {
@@ -194,7 +186,7 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
                     label={item}
                     onDelete={handleDeleteAuthor(item)}
                   />
-                )
+                );
               })}
           </div>
 
@@ -241,8 +233,8 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
               ),
             }}
           />
-          <div style={{ margin: '0' }}>
-            {' '}
+          <div style={{ margin: "0" }}>
+            {" "}
             categories:
             {categoriesState.categories.length >= 1 &&
               categoriesState.categories.map((item) => {
@@ -251,10 +243,10 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
                     key={item}
                     label={item}
                     onDelete={
-                      item === 'any' ? undefined : handleDeleteCategory(item)
+                      item === "any" ? undefined : handleDeleteCategory(item)
                     }
                   />
-                )
+                );
               })}
           </div>
 
@@ -269,7 +261,7 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
             required
             onChange={(e) => setQuantity(e.target.value)}
           />
-          
+
           <Button
             type="submit"
             variant="contained"
@@ -281,7 +273,7 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
         </form>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default EditBook
+export default EditBook;

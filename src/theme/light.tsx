@@ -70,6 +70,17 @@ export const lightMode = createMuiTheme({
         fontSize: '1rem',
         margin: '0 10px'
       },
+      containedSecondary: {
+        fontSize: '1rem',
+        backgroundColor: '#E33C1C',
+        borderRadius: '20px',
+        color: '#FFFFFF',
+        '&:hover': {
+          backgroundColor: '#FCF5F4',
+          borderRadius: '20px',
+          color: '#000000',
+        },
+      }
     },
     MuiAvatar: {
       root: {

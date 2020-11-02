@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import CreateBook from './pages/CreateBook'
 import EditBook from './pages/EditBook'
 import EditAdmin from './pages/EditAdmin'
+import DeleteAdmin from './pages/DeleteAdmin'
 import Admin from './pages/Admin'
 import Register from './pages/Register'
 import LogIn from './pages/Login'
@@ -17,6 +18,7 @@ const Routes = () => (
     <AdminRoute exact={true} path="/admin" component={Admin} />
     <AdminRoute exact={true} path="/admin/books/create" component={CreateBook} />
     <AdminRoute exact={true} path="/admin/books/edit" component={EditAdmin} />
+    <AdminRoute exact={true} path="/admin/books/delete" component={DeleteAdmin} />
     <AdminRoute exact={true} path="/admin/book/:bookId/edit" component={EditBook} />
     <Route exact path="/" component={Home} />
     <Route exact path="/register" component={Register} />

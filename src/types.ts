@@ -139,7 +139,10 @@ export type CreateBookSucceed = {
 export type DeleteBookSucceed = {
   type: typeof DELETE_BOOK_SUCCEED
   payload: {
-    res: any
+    data: {
+      status: 'success',
+      message: string
+    }
     bookId: string
   }
 }
@@ -199,8 +202,8 @@ export type CreateBookFailed = {
 export type DeleteBookFailed = {
   type: typeof DELETE_BOOK_FAILED
   payload: {
-    loading: boolean
-    error: []
+    status: 'error',
+    message: string
   }
 }
 

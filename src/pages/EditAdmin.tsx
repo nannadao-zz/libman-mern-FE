@@ -14,7 +14,7 @@ const EditAdmin = () => {
       <Navbar />
       <div className="EditAdmin-MainContainer">
         <h1> ALL BOOKS </h1>
-      
+
         <div className="EditAdmin-List">
           {bookResponse.allBooks.map((book: BookResponse) => (
             <div key={book._id} className="EditAdmin-Single"> 

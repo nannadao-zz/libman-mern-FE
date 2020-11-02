@@ -1,116 +1,90 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import { Grid, Paper } from '@material-ui/core'
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { Paper } from "@material-ui/core";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 
-import Navbar from '../components/Navbar'
+import Navbar from "../components/Navbar";
+import "../style/Admin.css";
 
 const useStyle = makeStyles({
-  container: {
-    height: '100vh',
-  },
-  actionContainer: {
-    alignItems: 'stretch',
-    height: '70vh',
-  },
-  navbar: {
-    height: '10vh',
-  },
-  actions: {
-    marginTop: '2rem',
-    height: '90vh',
-  },
   card: {
-    border: '2px solid #D9D9D9',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    '&:hover': {
-      border: '2px solid #5386A6',
-      cursor: 'pointer',
-      '& $icon': {
-        color: '#5386A6',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: '250px',
+    width: '250px',
+    borderRadius: '50px',
+    "&:hover": {
+      cursor: "pointer",
+      backgroundImage: 'linear-gradient(to right bottom, #2b65d9, #7784df, #a6a7e6, #cecbec, #f2f2f2)',
+      color: '#FFFFFF',
+      "& $icon": {
+        color: "#FFFFFF",
       },
     },
   },
   icon: {
-    color: '#D9D9D9',
-    fontSize: '80px',
+    color: "#D9D9D9",
+    fontSize: "70px",
+    marginBottom: '1rem'
   },
-})
+});
 
 const Admin = () => {
-  const style = useStyle()
-  const history = useHistory()
+  const style = useStyle();
+  const history = useHistory();
 
-  const handleCreate = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    history.push('/admin/books/create')
-  }
+  const handleCreate = () => {
+    history.push("/admin/books/create");
+  };
 
-  const handleEdit = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    history.push('/admin/books/edit')
-  }
+  const handleEdit = () => {
+    history.push("/admin/books/edit");
+  };
+
+  const handleDelete = () => {
+    history.push("/admin/books/delete");
+  };
 
   return (
-    <Grid container classes={{ root: style.container }}>
-      <Grid
-        item
-        lg={12}
-        md={12}
-        sm={12}
-        xs={12}
-        classes={{ item: style.navbar }}
-      >
-        <Navbar />
-      </Grid>
+    <>
+      <Navbar />
+      <div className="Admin-MainContainer">
+        <div className="Admin-Card">
+          <Paper
+            elevation={0}
+            classes={{ root: style.card }}
+            onClick={handleCreate}
+          >
+            <AddCircleOutlineIcon classes={{ root: style.icon }} />
+            <h2> CREATE </h2>
+          </Paper>
 
-      <Grid
-        item
-        lg={12}
-        md={12}
-        sm={12}
-        xs={12}
-        classes={{ item: style.actions }}
-      >
-        <Grid
-          container
-          spacing={3}
-          classes={{ root: style.actionContainer }}
-          direction="row"
-          justify="center"
-          alignItems="stretch"
-        >
-          <Grid item lg={3} md={5} sm={10} xs={10}>
-            <Paper
-              elevation={0}
-              classes={{ root: style.card }}
-              onClick={handleCreate}
-            >
-              <AddCircleOutlineIcon classes={{ root: style.icon }} />
-              <h2> Create a new book </h2>
-            </Paper>
-          </Grid>
+          <Paper
+            elevation={0}
+            classes={{ root: style.card }}
+            onClick={handleEdit}
+          >
+            <EditIcon classes={{ root: style.icon }} />
+            <h2> EDIT</h2>
+          </Paper>
 
-          <Grid item lg={3} md={5} sm={10} xs={10}>
-            <Paper elevation={0} classes={{ root: style.card }} onClick={handleEdit}>
-              <AddCircleOutlineIcon classes={{ root: style.icon }} />
-              <h2> Edit a book </h2>
-            </Paper>
-          </Grid>
+          <Paper
+            elevation={0}
+            classes={{ root: style.card }}
+            onClick={handleDelete}
+          >
+            <DeleteOutlineOutlinedIcon classes={{ root: style.icon }} />
+            <h2> DELETE </h2>
+          </Paper>
+        </div>
+      </div>
+    </>
+  );
+};
 
-          <Grid item lg={3} md={5} sm={10} xs={10}>
-            <Paper elevation={0} classes={{ root: style.card }}>
-              <AddCircleOutlineIcon classes={{ root: style.icon }} />
-              <h2> Delete a new book </h2>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-  )
-}
-
-export default Admin
+export default Admin;
