@@ -1,0 +1,60 @@
+.EditAdmin-MainContainer {
+  min-height: 100vh;
+  padding-top: 50px;
+  background-color: #F2F2F2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.EditAdmin-MainContainer h1 {
+  font-size: 35px;
+  font-family: 'Raleway', sans-serif;
+  color: #044BD9;
+  margin: 1rem 0;
+}
+
+.EditAdmin-Single {
+  display: grid;
+  grid-template-columns: 100px auto 200px 150px 150px;
+  justify-items: center;
+  align-items: center;
+  column-gap: 2rem;
+  margin: 1rem 0
+}
+
+.EditAdmin-List p {
+  font-size: 16px;
+}
+
+@media (max-width: 1000px) {
+  .EditAdmin-List {
+    min-width: 95%;
+  }
+  .EditAdmin-Single {
+    display: grid;
+    grid-template-columns: 100px auto 200px 150px 150px;
+    justify-items: center;
+    align-items: center;
+    column-gap: 0.5rem;
+    margin: 1rem 0
+  }
+}
+
+@media (max-width: 750px) {
+  .EditAdmin-Image {
+    display: none;
+  }
+  .EditAdmin-List {
+    min-width: 85%;
+  }
+  .EditAdmin-Single {
+    display: grid;
+    grid-template-columns: auto 200px 150px 100px;
+    justify-items: start;
+    align-items: center;
+    column-gap: 0.5rem;
+    margin: 1rem 2rem
+  }
+}

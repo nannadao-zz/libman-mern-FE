@@ -1,0 +1,30 @@
+.BookDetail-MainContainer {
+  min-height: 100vh;
+  padding-top: 50px;
+  background-color: #F2F2F2;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.BookDetail-Image {
+  margin: 2.5rem;
+  flex-basis: 20%;
+}
+
+.BookDetail-Info {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-basis: 40%;
+  margin: 2.5rem;
+}
+
+.BookDetail-Button {
+  align-self: flex-start;
+  margin: 1rem 0;
+}
+
+.BookDetail-Accordion {
+  margin: 1rem 0
+}

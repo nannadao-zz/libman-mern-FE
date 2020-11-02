@@ -1,0 +1,70 @@
+.Register-MainContainer {
+  min-height: 100vh;
+  padding-top: 50px;
+  background-color: #F2F2F2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: -1;
+}
+
+.Register-Card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 50px;
+  padding: 3rem;
+}
+
+.Register-Card h1 {
+  z-index: 2;
+  font-size: 35px;
+  font-family: 'Raleway', sans-serif;
+  color: #044BD9;
+}
+
+/* .Register-Background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: #2B65D9;
+  width: 50vmax;
+  z-index: 1;
+  animation: move 10s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes move {
+  0%   { transform: scale(0.8)}
+  20%  { transform: scale(0.8) translate(30%, 200px) skew(10deg)}
+  40%  { transform: scale(0.6) skew(0.312rad)}
+  65%  { transform: scale(0.9)}
+  85%  { transform: scale(0.7)}
+  100% { transform: scale(0.8)} 
+} */
+
+.Register-Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.Register-NameField {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 430px;
+}
+
+.Register-Button {
+  align-self: flex-end;
+  margin-right: 48px
+}
+
+.Register-Fields {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
