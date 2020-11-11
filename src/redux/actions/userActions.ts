@@ -10,8 +10,12 @@ import {
   LOGOUT_USER_FAILED,
   HIDE_MESSAGE,
   REGISTER_USER_SUCCEED,
+  UPDATE_USER_REQUESTED,
   UPDATE_USER_SUCCEED,
   UPDATE_USER_FAILED,
+  EDIT_USER_REQUESTED,
+  EDIT_USER_SUCCEED,
+  EDIT_USER_FAILED,
   User,
   SuccessResponse
 } from '../../types'
@@ -75,8 +79,13 @@ const logoutFailed = (error: any) => {
 
 export const updateUser = (userId: string) => async (dispatch: Dispatch) => {
   try {
-    const { data } = await axios.get(`/api/v1/users/${userId}`)
-    return dispatch(updateUserSucceed(data))
+    dispatch({ type: UPDATE_USER_REQUESTED })
+    const res = await axios.get(`/api/v1/users/${userId}`)
+    if (res.status === 200 && res.data.status === "success") {
+      return dispatch(updateUserSucceed(res.data));
+    } else if (res.status === 200 && res.data.message === 'TokenExpiredError') {
+      return dispatch(updateUserFailed(res.data))
+    }
   } catch (error) {
     return dispatch(updateUserFailed(error.response.data))
   }
@@ -89,9 +98,41 @@ const updateUserSucceed = (data: any) => {
   }
 }
 
-const updateUserFailed= (error: any) => {
+const updateUserFailed = (error: any) => {
   return {
     type: UPDATE_USER_FAILED,
+    payload: error
+  }
+}
+
+export const editUser = (userId: string, fullName: string, username: string, email: string) => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: EDIT_USER_REQUESTED })
+    const res = await axios.put(`/api/v1/users/${userId}/edit`, {
+      fullName: fullName,
+      username: username,
+      email: email
+    })
+    if (res.status === 200 && res.data.status === "success") {
+      await dispatch(editUserSucceed(res.data));
+    } else if (res.status === 200 && res.data.message === 'TokenExpiredError') {
+      await dispatch(editUserFailed(res.data))
+    }
+  } catch (error) {
+    return dispatch(editUserFailed(error.response.data))
+  }
+}
+
+const editUserSucceed = (data: any) => {
+  return {
+    type: EDIT_USER_SUCCEED,
+    payload: data
+  }
+}
+
+const editUserFailed = (error: any) => {
+  return {
+    type: EDIT_USER_FAILED,
     payload: error
   }
 }

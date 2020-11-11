@@ -10,23 +10,6 @@ import Navbar from "../components/Navbar";
 import "../style/Admin.css";
 
 const useStyle = makeStyles({
-  card: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: '250px',
-    width: '250px',
-    borderRadius: '50px',
-    "&:hover": {
-      cursor: "pointer",
-      backgroundImage: 'linear-gradient(to right bottom, #2b65d9, #7784df, #a6a7e6, #cecbec, #f2f2f2)',
-      color: '#FFFFFF',
-      "& $icon": {
-        color: "#FFFFFF",
-      },
-    },
-  },
   icon: {
     color: "#D9D9D9",
     fontSize: "70px",
@@ -57,7 +40,6 @@ const Admin = () => {
         <div className="Admin-Card">
           <Paper
             elevation={0}
-            classes={{ root: style.card }}
             onClick={handleCreate}
           >
             <AddCircleOutlineIcon classes={{ root: style.icon }} />
@@ -66,7 +48,6 @@ const Admin = () => {
 
           <Paper
             elevation={0}
-            classes={{ root: style.card }}
             onClick={handleEdit}
           >
             <EditIcon classes={{ root: style.icon }} />
@@ -75,7 +56,6 @@ const Admin = () => {
 
           <Paper
             elevation={0}
-            classes={{ root: style.card }}
             onClick={handleDelete}
           >
             <DeleteOutlineOutlinedIcon classes={{ root: style.icon }} />

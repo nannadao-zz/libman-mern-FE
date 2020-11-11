@@ -1,7 +1,7 @@
 .Home-MainContainer {
   min-height: 100vh;
   padding-top: 50px;
-  background-color: #F2F2F2;
+  background-color: #ececec;
   display: flex;
   flex-direction: column;
 }
@@ -42,37 +42,36 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  margin: 0.5rem;
 }
 
 @media (min-width: 1600px) {
-  .Home-BookContainer {
-    justify-content: center;
-  }
   .Home-IndividualBook {
-    flex-basis: 20%;
     margin: 0.5rem;
+    max-width: 350px;
+    min-width: 350px;
   }
 }
 
 @media (max-width: 1600px) {
   .Home-IndividualBook {
-    flex-basis: 30%;
     margin: 0.5rem;
+    max-width: 320px;
+    min-width: 320px;
   }
 }
 
 @media (max-width: 1100px) {
   .Home-IndividualBook {
-    flex-basis: 45%;
+    max-width: 300px;
+    min-width: 300px;
     margin: 0.5rem;
   }
 }
 
 @media (max-width: 790px) {
   .Home-IndividualBook {
-    flex-basis: 80%;
+    max-width: 350px;
+    min-width: 350px;
     margin: 0.5rem;
   }
 }

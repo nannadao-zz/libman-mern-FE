@@ -51,10 +51,10 @@ const Register = () => {
 
   const createNewUser = async (values: RegisterForm) => {
     try {
-      let { firstName, lastName, email, username, password } = values
+      let { fullName, email, username, password } = values
       let res = await axios.post(
         '/api/v1/users/register',
-        { firstName, lastName, email, username, password }
+        { fullName, email, username, password }
       )
       dispatch(registerSucceed(res.data))
     } catch (error) {
@@ -78,8 +78,7 @@ const Register = () => {
           <h1> REGISTER </h1>
           <Formik
             initialValues={{
-              lastName: '',
-              firstName: '',
+              fullName: '',
               username: '',
               email: '',
               password: '',
@@ -90,8 +89,7 @@ const Register = () => {
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email().required('Please enter valid email'),
-              firstName: Yup.string().required('Please enter first name'),
-              lastName: Yup.string().required('Please enter last name'),
+              fullName: Yup.string().required('Please enter first name'),
               username: Yup.string()
                 .matches(/^[a-z0-9._-]{3,15}$/)
                 .required('Invalid username'),
@@ -129,42 +127,22 @@ const Register = () => {
                   ) : null}
 
                   <div className="Register-Form">
-                    <div className="Register-NameField">
+                    <div>
                       <TextField
-                        classes={{ root: style.name }}
-                        name="firstName"
-                        id="firstName"
-                        label="First Name"
+                        classes={{ root: style.form }}
+                        name="fullName"
+                        id="fullName"
+                        label="Full Name"
                         variant="outlined"
-                        value={values.firstName}
+                        value={values.fullName}
                         type="text"
                         helperText={
-                          errors.firstName && touched.firstName
-                            ? errors.firstName
+                          errors.fullName && touched.fullName
+                            ? errors.fullName
                             : ''
                         }
                         error={
-                          errors.firstName && touched.firstName ? true : false
-                        }
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-
-                      <TextField
-                        classes={{ root: style.name }}
-                        name="lastName"
-                        id="lastName"
-                        label="Last Name"
-                        variant="outlined"
-                        value={values.lastName}
-                        type="text"
-                        helperText={
-                          errors.lastName && touched.lastName
-                            ? errors.lastName
-                            : ''
-                        }
-                        error={
-                          errors.lastName && touched.lastName ? true : false
+                          errors.fullName && touched.fullName ? true : false
                         }
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -200,7 +178,7 @@ const Register = () => {
                         type="text"
                         helperText={
                           errors.username && touched.username
-                            ? 'Invalid username'
+                            ? errors.username
                             : ''
                         }
                         error={

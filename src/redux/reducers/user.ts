@@ -7,98 +7,124 @@ import {
   LOGOUT_USER_FAILED,
   REGISTER_USER_SUCCEED,
   HIDE_MESSAGE,
+  UPDATE_USER_REQUESTED,
   UPDATE_USER_SUCCEED,
   UPDATE_USER_FAILED,
+  EDIT_USER_REQUESTED,
+  EDIT_USER_SUCCEED,
+  EDIT_USER_FAILED,
   UserState,
-  LoginUserActions,
-  LogoutUserActions,
-  UpdateUserActions,
-  HideMessage,
-  RegisterUser
-} from '../../types'
+  FetchUserActions,
+} from "../../types";
 
 export default function user(
   state: UserState = {
     loading: false,
-    user: '',
-    status: '',
-    message: '',
+    user: "",
+    status: "",
+    message: "",
   },
-  action: LoginUserActions | LogoutUserActions | UpdateUserActions | HideMessage | RegisterUser
+  action: FetchUserActions
 ): UserState {
   switch (action.type) {
     case LOGIN_USER_REQUESTED:
       return {
         ...state,
         loading: true,
-      }
+      };
     case LOGIN_USER_SUCCEED:
-      const user = action.payload
+      const user = action.payload;
       return {
         loading: false,
         user: user.data,
         message: user.message,
-        status: user.status
-      }
+        status: user.status,
+      };
     case LOGIN_USER_FAILED:
-      const loginError = action.payload
+      const loginError = action.payload;
       return {
         loading: false,
-        user: '',
+        user: "",
         message: loginError.message,
-        status: loginError.status
-      }
+        status: loginError.status,
+      };
     case LOGOUT_USER_REQUESTED:
       return {
         ...state,
         loading: true,
-      }
+      };
     case LOGOUT_USER_SUCCEED:
-      const logoutResponse = action.payload
+      const logoutResponse = action.payload;
       return {
         loading: false,
         status: logoutResponse.status,
         message: logoutResponse.message,
-        user: logoutResponse.user
-      }
+        user: logoutResponse.user,
+      };
     case LOGOUT_USER_FAILED:
-      const logoutError = action.payload
+      const logoutError = action.payload;
       return {
         ...state,
         loading: false,
         status: logoutError.status,
-        message: logoutError.message
-      }
+        message: logoutError.message,
+      };
     case REGISTER_USER_SUCCEED:
-      const feedback = action.payload
+      const feedback = action.payload;
       return {
         ...state,
         loading: false,
         message: feedback.message,
-        status: feedback.status
-      }
+        status: feedback.status,
+      };
+    case UPDATE_USER_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
     case UPDATE_USER_SUCCEED:
-      const updateResponse = action.payload
+      const updateResponse = action.payload;
       return {
         ...state,
         loading: false,
-        user: updateResponse.user
-      }
+        user: updateResponse.user,
+      };
     case UPDATE_USER_FAILED:
-      const updateError = action.payload
+      const updateError = action.payload;
       return {
         ...state,
         status: updateError.status,
-        message: updateError.message
-      }
+        message: updateError.message,
+      };
+    case EDIT_USER_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case EDIT_USER_SUCCEED:
+      const editResponse = action.payload;
+      return {
+        ...state,
+        loading: false,
+        user: editResponse.user,
+        status: editResponse.status,
+        message: editResponse.message
+      };
+    case EDIT_USER_FAILED:
+      const editError = action.payload;
+      return {
+        ...state,
+        status: editError.status,
+        message: editError.message,
+      };
     case HIDE_MESSAGE:
       return {
         ...state,
         loading: false,
-        message: '',
-        status: ''
-      }
+        message: "",
+        status: "",
+      };
     default:
-      return state
+      return state;
   }
 }

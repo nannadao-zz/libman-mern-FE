@@ -33,6 +33,9 @@ export const REGISTER_USER_SUCCEED = 'REGISTER_USER_SUCCEED'
 export const UPDATE_USER_REQUESTED = 'UPDATE_USER_REQUESTED'
 export const UPDATE_USER_SUCCEED = 'UPDATE_USER_SUCCEED'
 export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED'
+export const EDIT_USER_REQUESTED = 'EDIT_USER_REQUESTED'
+export const EDIT_USER_SUCCEED = 'EDIT_USER_SUCCEED'
+export const EDIT_USER_FAILED = 'EDIT_USER_FAILED'
 export const VERIFY_USER_REQUESTED = 'VERIFY_USER_REQUESTED'
 export const VERIFY_USER_SUCCEED = 'VERIFY_USER_SUCCEED'
 export const VERIFY_USER_FAILED = 'VERIFY_USER_FAILED'
@@ -227,6 +230,14 @@ export type HideBookMessage = {
   type: typeof HIDE_MESSAGE
 }
 
+export type FetchUserActions = 
+| LoginUserActions
+| LogoutUserActions
+| UpdateUserActions
+| EditUserActions
+| RegisterUser
+| HideMessage
+
 export type LoginUserActions =
   | LoginUserRequested
   | LoginUserSucceed
@@ -304,12 +315,43 @@ export type UpdateUserRequested = {
 export type UpdateUserSucceed = {
   type: typeof UPDATE_USER_SUCCEED
   payload: {
-    user: Partial<User>
+    user: Partial<User>,
+    status: 'success' | 'error',
+    message: string
   }
 }
 
 export type UpdateUserFailed = {
   type: typeof UPDATE_USER_FAILED
+  payload: {
+    status: 'error',
+    message: string
+  }
+}
+
+export type EditUserActions =
+  | EditUserRequested
+  | EditUserSucceed
+  | EditUserFailed
+
+export type EditUserRequested = {
+  type: typeof EDIT_USER_REQUESTED
+  payload: {
+    loading: boolean
+  }
+}
+
+export type EditUserSucceed = {
+  type: typeof EDIT_USER_SUCCEED
+  payload: {
+    status: 'success'
+    message: string
+    user: Partial<User>
+  }
+}
+
+export type EditUserFailed = {
+  type: typeof EDIT_USER_FAILED
   payload: {
     status: 'error',
     message: string
@@ -383,6 +425,8 @@ export type User = {
   password: string
   isAdmin: boolean
   borrows: any[]
+  returns: any[]
+  imageUrl: string
   _id: string
 }
 
@@ -403,8 +447,7 @@ export type ActionFeedback = {
 }
 
 export type RegisterForm = {
-  lastName: string
-  firstName: string
+  fullName: string
   username: string
   email: string
   password: string
@@ -446,6 +489,10 @@ export type EditRouteInfo = {
   bookId: string
 }
 
+export type ProfileRouteInfo = {
+  userId: string
+}
+
 export type BookAccordionProps = {
   isbn: string
   publisher: string
@@ -463,6 +510,10 @@ export type AuthorProps = {
 export type BorrowProps = {
   bookUrl: string,
   quantity: number
+}
+
+export type UserProps = {
+  userInfo: Partial<User>
 }
 
 export type ReturnProps = {
