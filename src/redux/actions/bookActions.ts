@@ -63,10 +63,15 @@ export const deleteBook = (bookId: string) => async (dispatch: Dispatch) => {
     dispatch({type: DELETE_BOOK_REQUESTED})
     if(bookId) {
       const res = await axios.delete(`/api/v1/books/${bookId}`)
-      return dispatch(deleteBookSucceed(res, bookId))
+      /* return dispatch(deleteBookSucceed(data, bookId)) */
+      if (res.status === 200 && res.data.status === "success") {
+        await dispatch(deleteBookSucceed(res.data, bookId));
+      } else if (res.status === 200 && res.data.message === 'TokenExpiredError') {
+        await dispatch(deleteBookFailed(res.data))
+      }
     }
   } catch (error) {
-    return dispatch(deleteBookFailed(error))
+    return dispatch(deleteBookFailed(error.response.data))
   }
 }
 
@@ -120,11 +125,11 @@ export const createBookSucceed = (data: any) => {
   }
 }
 
-const deleteBookSucceed = (res: any, bookId: string) => {
+const deleteBookSucceed = (data: any, bookId: string) => {
   return {
     type: DELETE_BOOK_SUCCEED,
     payload: {
-      res,
+      data,
       bookId
     }
   }
@@ -158,7 +163,7 @@ const fetchBookQueryFailed = (error: AxiosResponse) => {
   }
 }
 
-export const editBookFailed = (error: ErrorResponse) => {
+export const editBookFailed = (error: any) => {
   return {
     type: EDIT_BOOK_FAILED,
     payload: error

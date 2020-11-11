@@ -32,6 +32,7 @@ const BookAccordion: React.FC<BookAccordionProps> = ({
 }) => {
   const [expanded, setExpanded] = useState<string | false>('description')
   const style = useStyles()
+  
   const handleChange = (panel: string) => (
     event: React.ChangeEvent<{}>,
     newExpanded: boolean

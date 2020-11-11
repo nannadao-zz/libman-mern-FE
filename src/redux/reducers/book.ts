@@ -120,23 +120,24 @@ export default function book(
         loading: true
       }
     case DELETE_BOOK_SUCCEED:
-      const { res, bookId } = action.payload
-      let newList = state.filteredBooks.filter(
+      const { data, bookId } = action.payload
+      let newList = state.allBooks.filter(
         (item: BookResponse) => item._id !== bookId
       )
       return {
         ...state,
         loading: false,
-        response: res,
-        filteredBooks: newList,
-        errors: [],
+        allBooks: newList,
+        status: data.status,
+        message: data.message
       }
     case DELETE_BOOK_FAILED:
-      const error3 = action.payload
+      const deleteError = action.payload
       return {
         ...state,
         loading: false,
-        errors: [error3],
+        status: deleteError.status,
+        message: deleteError.message
       }
     case BORROW_BOOK_REQUESTED:
       return {

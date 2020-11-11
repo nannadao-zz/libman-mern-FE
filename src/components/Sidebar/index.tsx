@@ -114,7 +114,7 @@ const Sidebar = () => {
           flexItem
           classes={{ root: style.icon }}
         />
-        <SearchIcon />
+        <SearchIcon classes={{ root: style.icon }} />
         <InputBase
           placeholder="Search by author"
           inputProps={{ 'aria-label': 'search by author' }}

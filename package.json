@@ -37,7 +37,7 @@
     "typescript": "^3.7.5",
     "yup": "^0.29.3"
   },
-  "proxy": "https://afternoon-cliffs-76176.herokuapp.com",
+  "proxy": "http://127.0.0.1:8080",
   "scripts": {
     "start": "PORT=3600 react-scripts start",
     "build": "react-scripts build",

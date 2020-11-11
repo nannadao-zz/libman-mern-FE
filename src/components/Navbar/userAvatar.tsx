@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import { Avatar } from '@material-ui/core'
@@ -16,26 +16,15 @@ const useStyles = makeStyles({
 
 const UserAvatar = () => {
   const style = useStyles()
-  const [abbreviation, setAbbreviation] = useState('')
   const data = useSelector((state: AppState) => state.user)
   const { user } = data
 
-  useEffect(() => {
-    const getNameAbbreviation = () => {
-      let firstName = user.firstName
-      let lastName = user.lastName
-      let string = `${firstName} ${lastName}`
-      const abbreviation = string
-        .split(/\s/)
-        .reduce((abbreviation, word) => (abbreviation += word.slice(0, 1)), '')
-      setAbbreviation(abbreviation)
-    }
-    getNameAbbreviation()
-  }, [user.firstName, user.lastName])
-
   return (
     <>
-      <Avatar classes={{ root: style.avatar }}> {abbreviation} </Avatar>
+      <Avatar
+        src={user.imageUrl}
+        classes={{root: style.avatar}}
+      />
     </>
   )
 }

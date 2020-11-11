@@ -17,7 +17,7 @@ export const lightMode = createMuiTheme({
         alignItems: 'center',
       },
       colorPrimary: {
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#ececec',
       }
     },
     MuiButton: {
@@ -70,6 +70,17 @@ export const lightMode = createMuiTheme({
         fontSize: '1rem',
         margin: '0 10px'
       },
+      containedSecondary: {
+        fontSize: '1rem',
+        backgroundColor: '#E33C1C',
+        borderRadius: '20px',
+        color: '#FFFFFF',
+        '&:hover': {
+          backgroundColor: '#FCF5F4',
+          borderRadius: '20px',
+          color: '#000000',
+        },
+      }
     },
     MuiAvatar: {
       root: {
@@ -102,6 +113,9 @@ export const lightMode = createMuiTheme({
         fontWeight: 400,
         lineHeight: '1.1876em',
         letterSpacing: '0.00938em',
+      },
+      colorSecondary: {
+        color: "#000000"
       }
     },
     MuiChip: {
@@ -120,6 +134,20 @@ export const lightMode = createMuiTheme({
     MuiTooltip: {
       tooltip: {
         fontSize: '14px'
+      }
+    },
+    MuiBadge: {
+      anchorOriginBottomRightCircle: {
+        top: '70%'
+      }
+    },
+    MuiIconButton: {
+      colorPrimary: {
+        color: "#2B65D9",
+        backgroundColor: "#ffffff42"
+      },
+      root: {
+        padding: '10px'
       }
     }
   },
