@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-/* import axios from 'axios' */
+import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
@@ -52,6 +52,21 @@ const LoginCard = () => {
   const submitHandler = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(login(username, password))
+    /* try {
+      const {
+        data,
+      } = await axios.post(
+        'https://infinite-bayou-72273.herokuapp.com/api/v1/users/login',
+          {
+            username,
+            password,
+          },
+          { withCredentials: true}
+        )
+      console.log(data)
+    } catch (error) {
+      console.log(error.response.data)
+    } */
   }
 
   const handleRegister = () => {

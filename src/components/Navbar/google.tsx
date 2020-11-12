@@ -14,8 +14,9 @@ const GoogleLoginButton = () => {
   const googleResponse = async (response: any) => {
     try {
       let res = await axios.post(
-        '/auth/google-authenticate',
-        { id_token: response.tokenObj.id_token }
+        'https://infinite-bayou-72273.herokuapp.com//auth/google-authenticate',
+        { id_token: response.tokenObj.id_token },
+        {withCredentials: true}
       )
       dispatch(loginSucceed({
         data: res.data,

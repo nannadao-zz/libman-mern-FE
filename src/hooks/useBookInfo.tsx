@@ -12,7 +12,10 @@ const useBookInfo = (bookId: string) => {
 
   useEffect(() => {
     const fetchBookInfo = async () => {
-      let {data} = await axios.get(`/api/v1/books/${bookId}`)
+      let {data} = await axios.get(
+        `https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookId}`,
+        {withCredentials: true}
+        )
       setTitle(data.title)
       setIsbn(data.isbn)
       setPublisher(data.publisher)

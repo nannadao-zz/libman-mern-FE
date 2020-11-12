@@ -27,10 +27,14 @@ export const login = (username: string, password: string) => async (
     dispatch({ type: LOGIN_USER_REQUESTED })
     const {
       data,
-    } = await axios.post('/api/v1/users/login', {
-      username,
-      password,
-    })
+    } = await axios.post(
+      'https://infinite-bayou-72273.herokuapp.com/api/v1/users/login',
+        {
+          username,
+          password,
+        },
+        { withCredentials: true}
+      )
     return dispatch(loginSucceed(data))
   } catch (error) {
     return dispatch(loginFailed(error.response.data))
@@ -55,7 +59,8 @@ export const logout = () => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: LOGOUT_USER_REQUESTED })
     const { data } = await axios.get(
-      '/api/v1/users/logout'
+      'https://infinite-bayou-72273.herokuapp.com/api/v1/users/logout',
+      { withCredentials: true}
     )
     return dispatch(logoutSucceed(data))
   } catch (error) {
@@ -80,7 +85,10 @@ const logoutFailed = (error: any) => {
 export const updateUser = (userId: string) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUESTED })
-    const res = await axios.get(`/api/v1/users/${userId}`)
+    const res = await axios.get(
+      `https://infinite-bayou-72273.herokuapp.com/api/v1/users/${userId}`,
+      { withCredentials: true }
+    )
     if (res.status === 200 && res.data.status === "success") {
       return dispatch(updateUserSucceed(res.data));
     } else if (res.status === 200 && res.data.message === 'TokenExpiredError') {
@@ -108,11 +116,15 @@ const updateUserFailed = (error: any) => {
 export const editUser = (userId: string, fullName: string, username: string, email: string) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: EDIT_USER_REQUESTED })
-    const res = await axios.put(`/api/v1/users/${userId}/edit`, {
-      fullName: fullName,
-      username: username,
-      email: email
-    })
+    const res = await axios.put(
+      `https://infinite-bayou-72273.herokuapp.com/api/v1/users/${userId}/edit`, 
+        {
+          fullName: fullName,
+          username: username,
+          email: email
+        },
+        { withCredentials: true }
+      )
     if (res.status === 200 && res.data.status === "success") {
       await dispatch(editUserSucceed(res.data));
     } else if (res.status === 200 && res.data.message === 'TokenExpiredError') {

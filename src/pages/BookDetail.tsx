@@ -36,7 +36,8 @@ const BookDetail = ({ match }: RouteComponentProps<EditRouteInfo>) => {
   useEffect(() => {
     const fetchBookInfo = async () => {
       let { data } = await axios.get(
-        `/api/v1/books/${bookId}`
+        `https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookId}`,
+        {withCredentials: true}
       )
       setImage(data.imageUrl)
       setTitle(data.title)

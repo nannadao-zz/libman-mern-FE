@@ -54,7 +54,7 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
 
   useEffect(() => {
     const fetchBookInfo = async () => {
-      let { data } = await axios.get(`/api/v1/books/${bookId}`);
+      let { data } = await axios.get(`https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookId}`);
       setTitle(data.title);
       setIsbn(data.isbn);
       setPublisher(data.publisher);
@@ -101,7 +101,7 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`/api/v1/books/${bookId}`, {
+      const res = await axios.put(`https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookId}`, {
         title: title,
         isbn: parseInt(isbn),
         publisher: publisher,
@@ -109,7 +109,9 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
         quantity: parseInt(quantity),
         authors: authorsState.authors,
         categories: categoriesState.categories,
-      });
+      }, 
+      {withCredentials: true}
+      );
       if (res.status === 200 && res.data.status === "success") {
         await dispatch(editBookSucceed(res.data));
         setTimeout(() => history.push("/"), 2000);
