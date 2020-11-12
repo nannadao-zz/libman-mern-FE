@@ -53,8 +53,9 @@ const Register = () => {
     try {
       let { fullName, email, username, password } = values
       let res = await axios.post(
-        '/api/v1/users/register',
-        { fullName, email, username, password }
+        'https://infinite-bayou-72273.herokuapp.com/api/v1/users/register',
+        { fullName, email, username, password },
+        { withCredentials: true }
       )
       dispatch(registerSucceed(res.data))
     } catch (error) {

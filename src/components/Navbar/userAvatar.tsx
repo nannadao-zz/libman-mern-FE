@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { Avatar } from '@material-ui/core'
 
@@ -16,14 +17,19 @@ const useStyles = makeStyles({
 
 const UserAvatar = () => {
   const style = useStyles()
-  const data = useSelector((state: AppState) => state.user)
-  const { user } = data
+  const { user } = useSelector((state: AppState) => state.user)
+  const history = useHistory()
+
+  const handleViewProfile = () => {
+    history.push(`/${user._id}`)
+  }
 
   return (
     <>
       <Avatar
         src={user.imageUrl}
         classes={{root: style.avatar}}
+        onClick={handleViewProfile}
       />
     </>
   )

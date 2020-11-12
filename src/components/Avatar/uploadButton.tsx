@@ -3,10 +3,6 @@ import axios from 'axios'
 import { IconButton } from "@material-ui/core";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
-import {
-  updateUser,
-  editUser,
-} from "../../redux/actions/userActions";
 import { UserProps } from "../../types";
 import '../../style/UserProfile.css'
 
@@ -23,7 +19,8 @@ const UploadButton: React.FC<UserProps> = ({ userInfo }) => {
       'https://api.cloudinary.com/v1_1/dapyxdvj5/image/upload',
       form
     )
-    setImage(data.secure_url)
+    await setImage(data.secure_url)
+    console.log(image)
   }
 
   return (

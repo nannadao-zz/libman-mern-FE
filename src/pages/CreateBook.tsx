@@ -52,7 +52,7 @@ const CreateBook = () => {
     e.preventDefault()
     try {
       const res = await axios.post(
-        '/api/v1/books/create',
+        'https://infinite-bayou-72273.herokuapp.com/api/v1/books/create',
         {
           imageUrl: image,
           title: title,
@@ -62,7 +62,8 @@ const CreateBook = () => {
           quantity: parseInt(quantity),
           authors: authorsState.authors,
           categories: categoriesState.categories,
-        }
+        },
+        {withCredentials: true}
       )
       await dispatch(createBookSucceed(res.data))
       if (res.data.status === 'success') {
