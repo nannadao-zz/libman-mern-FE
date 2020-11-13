@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
 import { IconButton } from "@material-ui/core";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 import { UserProps } from "../../types";
+import { editUser, updateUser } from '../../redux/actions/userActions'
 import '../../style/UserProfile.css'
 
 const UploadButton: React.FC<UserProps> = ({ userInfo }) => {
-  const [image, setImage] = useState('')
+  const dispatch = useDispatch()
+  const userId = userInfo._id as string
+  const [changeState, setChanges] = useState({
+    fullName: userInfo.fullName,
+    username: userInfo.username,
+    email: userInfo.email,
+    imageUrl: userInfo.imageUrl
+  })
+
+  useEffect(() => {
+    const editUserAvatar = async () => {
+      if (changeState.imageUrl !== userInfo.imageUrl) {
+        await dispatch(editUser(userId, changeState))
+        dispatch(updateUser(userId))
+      }
+    }
+    editUserAvatar()
+  }, [dispatch, changeState, userId, userInfo.imageUrl])
 
   const handleUpload = async (e: React.ChangeEvent<any>) => {
     const files = e.target.files
@@ -19,8 +38,10 @@ const UploadButton: React.FC<UserProps> = ({ userInfo }) => {
       'https://api.cloudinary.com/v1_1/dapyxdvj5/image/upload',
       form
     )
-    await setImage(data.secure_url)
-    console.log(image)
+    setChanges({
+      ...changeState,
+      imageUrl: data.secure_url
+    })
   }
 
   return (

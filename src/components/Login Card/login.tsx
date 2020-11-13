@@ -51,21 +51,6 @@ const LoginCard = () => {
   const submitHandler = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(login(username, password))
-    /* try {
-      const {
-        data,
-      } = await axios.post(
-        'https://infinite-bayou-72273.herokuapp.com/api/v1/users/login',
-          {
-            username,
-            password,
-          },
-          { withCredentials: true}
-        )
-      console.log(data)
-    } catch (error) {
-      console.log(error.response.data)
-    } */
   }
 
   const handleRegister = () => {

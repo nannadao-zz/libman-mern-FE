@@ -10,6 +10,7 @@ const initial: AppState = {
     book: {
         loading: false,
         allBooks: [],
+        singleBook: '',
         filteredBooks: [],
         errors: [],
         response: [],

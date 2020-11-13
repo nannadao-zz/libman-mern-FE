@@ -2,6 +2,9 @@ import {
   BOOK_LIST_REQUESTED,
   BOOK_LIST_SUCCEED,
   BOOK_LIST_FAILED,
+  BOOK_INDIVIDUAL_REQUESTED,
+  BOOK_INDIVIDUAL_SUCCEED,
+  BOOK_INDIVIDUAL_FAILED,
   BOOK_QUERY_REQUESTED,
   BOOK_QUERY_SUCCEED,
   BOOK_QUERY_FAILED,
@@ -29,6 +32,7 @@ export default function book(
   state: BookState = {
     loading: true,
     allBooks: [],
+    singleBook: '',
     errors: [],
     filteredBooks: [],
     response: [],
@@ -57,6 +61,25 @@ export default function book(
       return {
         ...state,
         errors: [...state.errors, error],
+      }
+    case BOOK_INDIVIDUAL_REQUESTED:
+      return {
+        ...state,
+        loading: true
+      }
+    case BOOK_INDIVIDUAL_SUCCEED:
+      const singleBookResponse = action.payload
+      return {
+        ...state,
+        loading: false,
+        singleBook: singleBookResponse
+      }
+    case BOOK_INDIVIDUAL_FAILED:
+      const singleBookError = action.payload
+      return {
+        ...state,
+        loading: false,
+        message: singleBookError.message
       }
     case BOOK_QUERY_REQUESTED:
       return {
