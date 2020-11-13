@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
+import * as Yup from 'yup'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { TextField, Button, makeStyles } from '@material-ui/core'
 import { Formik, Form, FormikProps } from 'formik'
-import * as Yup from 'yup'
 import Alert from '@material-ui/lab/Alert'
 import { Tooltip, IconButton, Zoom } from '@material-ui/core'
 import HelpIcon from '@material-ui/icons/Help'
@@ -92,7 +92,7 @@ const Register = () => {
               email: Yup.string().email().required('Please enter valid email'),
               fullName: Yup.string().required('Please enter first name'),
               username: Yup.string()
-                .matches(/^[a-z0-9._-]{3,15}$/)
+                .matches(/^[a-zA-Z0-9.-_]{3,30}$/)
                 .required('Invalid username'),
               password: Yup.string()
                 .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*]).{8,20}\S$/)

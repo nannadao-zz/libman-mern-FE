@@ -101,15 +101,17 @@ const EditBook = ({ match }: RouteComponentProps<EditRouteInfo>) => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookId}`, {
-        title: title,
-        isbn: parseInt(isbn),
-        publisher: publisher,
-        publishYear: parseInt(publishYear),
-        quantity: parseInt(quantity),
-        authors: authorsState.authors,
-        categories: categoriesState.categories,
-      }, 
+      const res = await axios.put(
+        `https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookId}`,
+        {
+          title: title,
+          isbn: parseInt(isbn),
+          publisher: publisher,
+          publishYear: parseInt(publishYear),
+          quantity: parseInt(quantity),
+          authors: authorsState.authors,
+          categories: categoriesState.categories,
+        }, 
       {withCredentials: true}
       );
       if (res.status === 200 && res.data.status === "success") {

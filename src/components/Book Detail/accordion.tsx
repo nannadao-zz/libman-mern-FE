@@ -28,6 +28,7 @@ const BookAccordion: React.FC<BookAccordionProps> = ({
   publisher,
   publishYear,
   quantity,
+  description,
   categories
 }) => {
   const [expanded, setExpanded] = useState<string | false>('description')
@@ -56,13 +57,7 @@ const BookAccordion: React.FC<BookAccordionProps> = ({
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Danish liquorice tootsie roll apple pie candy canes caramels.
-            Caramels cake fruitcake cupcake cotton candy sweet. Candy canes
-            candy canes cookie jelly beans bonbon I love I love biscuit
-            lollipop. Candy marzipan marshmallow I love brownie. Topping topping
-            wafer sesame snaps ice cream I love. Dragée candy carrot cake I
-            love. Brownie candy cheesecake brownie sesame snaps I love
-            liquorice.
+            {description}
           </Typography>
         </AccordionDetails>
       </Accordion>

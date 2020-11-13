@@ -113,16 +113,12 @@ const updateUserFailed = (error: any) => {
   }
 }
 
-export const editUser = (userId: string, fullName: string, username: string, email: string) => async (dispatch: Dispatch) => {
+export const editUser = (userId: string, changes: any) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: EDIT_USER_REQUESTED })
     const res = await axios.put(
       `https://infinite-bayou-72273.herokuapp.com/api/v1/users/${userId}/edit`, 
-        {
-          fullName: fullName,
-          username: username,
-          email: email
-        },
+        changes,
         { withCredentials: true }
       )
     if (res.status === 200 && res.data.status === "success") {

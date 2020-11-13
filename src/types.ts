@@ -5,6 +5,9 @@
 export const BOOK_LIST_REQUESTED = 'BOOK_LIST_REQUESTED'
 export const BOOK_LIST_SUCCEED = 'BOOK_LIST_SUCCEED'
 export const BOOK_LIST_FAILED = 'BOOK_LIST_FAILED'
+export const BOOK_INDIVIDUAL_REQUESTED = 'BOOK_INDIVIDUAL_REQUESTED'
+export const BOOK_INDIVIDUAL_SUCCEED = 'BOOK_INDIVIDUAL_SUCCEED'
+export const BOOK_INDIVIDUAL_FAILED = 'BOOK_INDIVIDUAL_FAILED'
 export const BOOK_QUERY_REQUESTED = 'BOOK_QUERY_REQUESTED'
 export const BOOK_QUERY_SUCCEED = 'BOOK_QUERY_SUCCEED'
 export const BOOK_QUERY_FAILED = 'BOOK_QUERY_FAILED'
@@ -45,6 +48,9 @@ export type FetchBookActions =
   | FetchBookRequested
   | FetchBookSucceed
   | FetchBookFailed
+  | FetchIndividualBookRequested
+  | FetchIndividualBookSucceed
+  | FetchIndividualBookFailed
   | FetchBookQueryRequested
   | FetchBookQuerySucceed
   | FetchBookQueryFailed
@@ -68,7 +74,13 @@ export type FetchBookRequested = {
   type: typeof BOOK_LIST_REQUESTED
   payload: {
     loading: boolean
-    books: any
+  }
+}
+
+export type FetchIndividualBookRequested = {
+  type: typeof BOOK_INDIVIDUAL_REQUESTED
+  payload: {
+    loading: boolean
   }
 }
 
@@ -110,8 +122,14 @@ export type ReturnBookRequested = {
 export type FetchBookSucceed = {
   type: typeof BOOK_LIST_SUCCEED
   payload: {
-    loading: boolean
     books: any
+  }
+}
+
+export type FetchIndividualBookSucceed = {
+  type: typeof BOOK_INDIVIDUAL_SUCCEED
+  payload: {
+    singleBook: any
   }
 }
 
@@ -167,6 +185,13 @@ export type ReturnBookSucceed = {
     message: string
     book: BookResponse
     user: any
+  }
+}
+
+export type FetchIndividualBookFailed = {
+  type: typeof BOOK_INDIVIDUAL_FAILED
+  payload: {
+    message: string
   }
 }
 
@@ -382,6 +407,7 @@ export type BookState = {
   loading: boolean
   allBooks: any
   filteredBooks: any
+  singleBook: any
   errors: any[]
   response: any
   status: 'success' | 'error' | ''
@@ -408,6 +434,7 @@ export type Book = {
   isbn: number
   title: string
   authors: string[]
+  description: string
   publisher: string
   publishYear?: number
   categories: string[]
@@ -424,6 +451,7 @@ export type User = {
   email: string
   password: string
   isAdmin: boolean
+  fullName: string
   borrows: any[]
   returns: any[]
   imageUrl: string
@@ -454,6 +482,13 @@ export type RegisterForm = {
   confirmPassword: string
 }
 
+export type EditForm = {
+  fullName: string
+  username: string
+  email: string
+  imageUrl: string
+}
+
 export type BookInfo = {
   bookInfo: Partial<BookResponse>
 }
@@ -462,6 +497,7 @@ export type BookResponse = {
   isbn: number
   title: string
   authors: string[]
+  description: string
   publisher: string
   publishYear?: number
   categories: string[]
@@ -497,14 +533,13 @@ export type BookAccordionProps = {
   isbn: string
   publisher: string
   publishYear: string
+  description: string
   quantity: number
   categories: string[]
 }
 
 export type AuthorProps = {
-  authorsState: {
-    authors: string[]
-  }
+  authorsState: string[]
 }
 
 export type BorrowProps = {
@@ -521,7 +556,7 @@ export type ReturnProps = {
 }
 
 export type UserBorrowBook = {
-  book: string
+  book: Partial<BookResponse>
 }
 
 export type BookActionResponse = {

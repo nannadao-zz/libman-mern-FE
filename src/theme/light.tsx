@@ -138,7 +138,8 @@ export const lightMode = createMuiTheme({
     },
     MuiBadge: {
       anchorOriginBottomRightCircle: {
-        top: '70%'
+        top: '74%',
+        right: '-7%'
       }
     },
     MuiIconButton: {

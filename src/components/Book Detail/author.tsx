@@ -16,10 +16,10 @@ const BookAuthor: React.FC<AuthorProps> = ({ authorsState }) => {
   return (
     <Typography variant="subtitle2" component="h2">
       Authors:{' '}
-      {authorsState.authors.map((author) => {
+      {authorsState.map((author) => {
         if (
-          authorsState.authors.indexOf(author) ===
-          authorsState.authors.length - 1
+          authorsState.indexOf(author) ===
+          authorsState.length - 1
         ) {
           return (
             <Link

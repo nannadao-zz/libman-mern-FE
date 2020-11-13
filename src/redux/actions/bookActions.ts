@@ -5,6 +5,9 @@ import {
   BOOK_LIST_REQUESTED,
   BOOK_LIST_SUCCEED,
   BOOK_LIST_FAILED,
+  BOOK_INDIVIDUAL_REQUESTED,
+  BOOK_INDIVIDUAL_SUCCEED,
+  BOOK_INDIVIDUAL_FAILED,
   BOOK_QUERY_REQUESTED,
   BOOK_QUERY_SUCCEED,
   BOOK_QUERY_FAILED,
@@ -23,7 +26,7 @@ import {
   RETURN_BOOK_FAILED,
   HIDE_MESSAGE,
   CategoryQuery,
-  ErrorResponse
+  ErrorResponse,
 } from '../../types'
 
 export const fetchBookList = () => async (dispatch: Dispatch) => {
@@ -32,10 +35,23 @@ export const fetchBookList = () => async (dispatch: Dispatch) => {
     const { data } = await axios.get(
       'https://infinite-bayou-72273.herokuapp.com/api/v1/books/all',
       { withCredentials: true }
-      )
+    )
     return dispatch(fetchBookSucceed(data))
   } catch (error) {
     return dispatch(fetchBookFailed(error))
+  }
+}
+
+export const fetchIndividualBook = (bookId: string) => async (dispatch: Dispatch) => {
+  try {
+    dispatch({type: BOOK_INDIVIDUAL_REQUESTED})
+    const { data } = await axios.get(
+      `https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookId}`,
+      { withCredentials: true }
+    )
+    return dispatch(fetchBookIndividualSucceed(data))
+  } catch (error) {
+    return dispatch(fetchBookIndividualFailed(error.response.data))
   }
 }
 
@@ -48,7 +64,8 @@ export const fetchBookQuery = (
     dispatch({ type: BOOK_QUERY_REQUESTED })
     if (titleQuery || authorQuery || categoryQuery) {
       const { data } = await axios.get(
-        'https://infinite-bayou-72273.herokuapp.com/api/v1/books', {
+        'https://infinite-bayou-72273.herokuapp.com/api/v1/books', 
+        {
           params: {
             title: titleQuery,
             authors: authorQuery,
@@ -87,12 +104,16 @@ export const deleteBook = (bookId: string) => async (dispatch: Dispatch) => {
 export const borrowBook = (bookUrl: string) => async (dispatch: Dispatch) => {
   try {
     dispatch({type: BORROW_BOOK_REQUESTED})
-    const { data } = await axios.put(
+    const res = await axios.put(
       `https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookUrl}/borrow`,
       {},
       { withCredentials: true }
     )
-    return dispatch(borrowBookSucceed(data))
+    if (res.status === 200 && res.data.status === "success") {
+      return dispatch(borrowBookSucceed(res.data));
+    } else if (res.status === 200 && res.data.message === 'TokenExpiredError') {
+      return dispatch(borrowBookFailed(res.data))
+    }
   } catch (error) {
     return dispatch(borrowBookFailed(error.response.data))
   }
@@ -101,13 +122,17 @@ export const borrowBook = (bookUrl: string) => async (dispatch: Dispatch) => {
 export const returnBook = (bookUrl: string) => async (dispatch: Dispatch) => {
   try {
     dispatch({type: RETURN_BOOK_REQUESTED})
-    if(bookUrl) {
-      const { data } = await axios.put(
+    if (bookUrl) {
+      const res = await axios.put(
         `https://infinite-bayou-72273.herokuapp.com/api/v1/books/${bookUrl}/return`,
         {},
         { withCredentials: true }
       )
-      return dispatch(returnBookSucceed(data))
+      if (res.status === 200 && res.data.status === "success") {
+        return dispatch(returnBookSucceed(res.data));
+      } else if (res.status === 200 && res.data.message === 'TokenExpiredError') {
+        return dispatch(returnBookFailed(res.data))
+      }
     }
   } catch (error) {
     return dispatch(returnBookFailed(error.response.data))
@@ -125,6 +150,13 @@ const fetchBookSucceed = (data: any) => {
   return {
     type: BOOK_LIST_SUCCEED,
     payload: data,
+  }
+}
+
+const fetchBookIndividualSucceed = (data: any) => {
+  return {
+    type: BOOK_INDIVIDUAL_SUCCEED,
+    payload: data
   }
 }
 
@@ -170,6 +202,13 @@ const fetchBookFailed = (error: AxiosResponse) => {
   return {
     type: BOOK_LIST_FAILED,
     payload: error,
+  }
+}
+
+const fetchBookIndividualFailed = (error: any) => {
+  return {
+    type: BOOK_INDIVIDUAL_FAILED,
+    payload: error
   }
 }
 
